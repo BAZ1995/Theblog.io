@@ -9,7 +9,7 @@ export interface Post {
   excerpt: string | null;
   content: string;
   cover_image: string | null;
-  category: 'tech' | 'photography';
+  category: 'tech' | 'photography' | 'cars';
   author_id: string;
   published: boolean;
   created_at: string;

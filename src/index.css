@@ -47,6 +47,8 @@
     --tech-light: 210 80% 95%;
     --photography: 35 90% 50%;
     --photography-light: 35 90% 95%;
+    --cars: 0 75% 55%;
+    --cars-light: 0 75% 95%;
 
     /* Sidebar */
     --sidebar-background: 40 20% 97%;
@@ -92,6 +94,8 @@
     --tech-light: 210 50% 20%;
     --photography: 35 90% 60%;
     --photography-light: 35 50% 20%;
+    --cars: 0 75% 60%;
+    --cars-light: 0 50% 20%;
 
     --sidebar-background: 220 25% 10%;
     --sidebar-foreground: 40 15% 85%;
@@ -139,6 +143,10 @@
 
   .category-badge-photography {
     @apply bg-photography/10 text-photography border-photography/20;
+  }
+
+  .category-badge-cars {
+    @apply bg-cars/10 text-cars border-cars/20;
   }
 }
 

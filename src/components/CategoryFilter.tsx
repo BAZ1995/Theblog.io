@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Camera, Code2, Layers } from 'lucide-react';
+import { Camera, Car, Code2, Layers } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CategoryFilterProps {
@@ -12,6 +12,7 @@ export function CategoryFilter({ category, onCategoryChange }: CategoryFilterPro
     { id: 'all', label: 'All Posts', icon: Layers },
     { id: 'tech', label: 'Tech', icon: Code2 },
     { id: 'photography', label: 'Photography', icon: Camera },
+    { id: 'cars', label: 'Cars', icon: Car },
   ];
 
   return (
@@ -25,7 +26,8 @@ export function CategoryFilter({ category, onCategoryChange }: CategoryFilterPro
           className={cn(
             "transition-all",
             category === id && id === 'tech' && "bg-tech hover:bg-tech/90",
-            category === id && id === 'photography' && "bg-photography hover:bg-photography/90 text-foreground"
+            category === id && id === 'photography' && "bg-photography hover:bg-photography/90 text-foreground",
+            category === id && id === 'cars' && "bg-cars hover:bg-cars/90"
           )}
         >
           <Icon className="h-4 w-4 mr-1.5" />
