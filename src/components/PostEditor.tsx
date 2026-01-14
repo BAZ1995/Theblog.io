@@ -50,7 +50,7 @@ export function PostEditor({ post }: PostEditorProps) {
   const [excerpt, setExcerpt] = useState(post?.excerpt || '');
   const [content, setContent] = useState(post?.content || '');
   const [coverImage, setCoverImage] = useState(post?.cover_image || '');
-  const [category, setCategory] = useState<'tech' | 'photography'>(post?.category || 'tech');
+  const [category, setCategory] = useState<'tech' | 'photography' | 'cars'>(post?.category as 'tech' | 'photography' | 'cars' || 'tech');
   const [published, setPublished] = useState(post?.published || false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -173,13 +173,14 @@ export function PostEditor({ post }: PostEditorProps) {
 
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
-            <Select value={category} onValueChange={(v) => setCategory(v as 'tech' | 'photography')}>
+            <Select value={category} onValueChange={(v) => setCategory(v as 'tech' | 'photography' | 'cars')}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="tech">Tech</SelectItem>
                 <SelectItem value="photography">Photography</SelectItem>
+                <SelectItem value="cars">Cars</SelectItem>
               </SelectContent>
             </Select>
           </div>

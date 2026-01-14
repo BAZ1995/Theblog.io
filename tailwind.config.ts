@@ -59,6 +59,10 @@ export default {
           DEFAULT: "hsl(var(--photography))",
           light: "hsl(var(--photography-light))",
         },
+        cars: {
+          DEFAULT: "hsl(var(--cars))",
+          light: "hsl(var(--cars-light))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

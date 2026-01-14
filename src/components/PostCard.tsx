@@ -37,7 +37,7 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-6xl opacity-20">
-              {post.category === 'tech' ? '💻' : '📷'}
+              {post.category === 'tech' ? '💻' : post.category === 'cars' ? '🚗' : '📷'}
             </span>
           </div>
         )}
@@ -46,9 +46,9 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
             variant="outline" 
             className={cn(
               "text-xs font-medium backdrop-blur-sm",
-              post.category === 'tech' 
-                ? "bg-tech-light/90 text-tech border-tech/30" 
-                : "bg-photography-light/90 text-photography border-photography/30"
+              post.category === 'tech' && "bg-tech-light/90 text-tech border-tech/30",
+              post.category === 'photography' && "bg-photography-light/90 text-photography border-photography/30",
+              post.category === 'cars' && "bg-cars-light/90 text-cars border-cars/30"
             )}
           >
             {post.category}

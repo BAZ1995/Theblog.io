@@ -110,7 +110,7 @@ export default function Admin() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-2xl opacity-30">
-                        {post.category === 'tech' ? '💻' : '📷'}
+                        {post.category === 'tech' ? '💻' : post.category === 'cars' ? '🚗' : '📷'}
                       </div>
                     )}
                   </div>
@@ -123,9 +123,9 @@ export default function Admin() {
                         variant="outline" 
                         className={cn(
                           "text-xs shrink-0",
-                          post.category === 'tech' 
-                            ? "bg-tech-light text-tech border-tech/30" 
-                            : "bg-photography-light text-photography border-photography/30"
+                          post.category === 'tech' && "bg-tech-light text-tech border-tech/30",
+                          post.category === 'photography' && "bg-photography-light text-photography border-photography/30",
+                          post.category === 'cars' && "bg-cars-light text-cars border-cars/30"
                         )}
                       >
                         {post.category}
