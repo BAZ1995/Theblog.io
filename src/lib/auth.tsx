@@ -20,46 +20,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          const { data: roles } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', session.user.id);
-          
-          setIsAdmin(roles?.some(r => r.role === 'admin') ?? false);
-        } else {
-          setIsAdmin(false);
-        }
-        
-        setLoading(false);
-      }
-    );
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id)
-          .then(({ data: roles }) => {
-            setIsAdmin(roles?.some(r => r.role === 'admin') ?? false);
-            setLoading(false);
-          });
-      } else {
-        setLoading(false);
-      }
+  const fetchIsAdmin = async (userId: string) => {
+    // Use the backend helper (SECURITY DEFINER) so this works even if user_roles SELECT is restricted by RLS
+    const { data, error } = await supabase.rpc('has_role', {
+      _user_id: userId,
+      _role: 'admin',
     });
 
-    return () => subscription.unsubscribe();
+    if (error) return false;
+    return Boolean(data);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const applySession = async (nextSession: Session | null) => {
+      if (!isMounted) return;
+
+      setLoading(true);
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+
+      if (nextSession?.user) {
+        const admin = await fetchIsAdmin(nextSession.user.id);
+        if (!isMounted) return;
+        setIsAdmin(admin);
+      } else {
+        setIsAdmin(false);
+      }
+
+      if (isMounted) setLoading(false);
+    };
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      void applySession(nextSession);
+    });
+
+    // Initialize from existing session AFTER setting up the listener
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      void applySession(session);
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
