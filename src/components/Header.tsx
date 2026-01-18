@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Camera, Code2, Menu, PenSquare, User, LogOut, X } from 'lucide-react';
+import { Camera, Car, Code2, Menu, PenSquare, User, LogOut, X } from 'lucide-react';
 
 export function Header() {
   const { user, isAdmin, signOut } = useAuth();
@@ -45,6 +45,13 @@ export function Header() {
           >
             <Camera className="h-4 w-4 text-photography" />
             Photography
+          </Link>
+          <Link 
+            to="/?category=cars" 
+            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Car className="h-4 w-4 text-cars" />
+            Cars
           </Link>
           <Link 
             to="/about" 
@@ -130,6 +137,14 @@ export function Header() {
             >
               <Camera className="h-4 w-4 text-photography" />
               Photography
+            </Link>
+            <Link 
+              to="/?category=cars" 
+              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Car className="h-4 w-4 text-cars" />
+              Cars
             </Link>
             <Link 
               to="/about" 
